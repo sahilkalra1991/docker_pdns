@@ -10,7 +10,7 @@ Requirements:
 This setup installs following services:
 1. **PowerDNS** authoritative server: Version 4.1.0
 2. **MariaDB** backend for PowerDNS: Version 10.2
-3. **NSedit** Web frontend for PowerDNS: Version Latest
+3. **NSedit** Web frontend for PowerDNS: Version Latest **[Development. Not ready for Production]**
 
 File Descriptions:
 1. **`docker-compose.yml`**: Contains service definitions of all docker containers
