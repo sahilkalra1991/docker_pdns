@@ -1,0 +1,64 @@
+<?php
+
+$apipass = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';           # The PowerDNS API-key
+$apiip = 'pdns-server';           # The IP of the PowerDNS API
+$apiport = '8081';       # The port of the PowerDNS API
+$apiproto      = 'http'; # http | https
+$apisslverify  = FALSE;  # Verify SSL Certificate if using https for apiproto
+$allowzoneadd  = FALSE;  # Allow normal users to add zones
+$logging = TRUE;
+$allowclearlogs = TRUE;  # Allow clearing of log entries
+$allowrotatelogs = FALSE;# Allow rotation to text file on server
+
+# Log directory - if allowrotatelogs is set, this is where the logs will
+# be written. It must be writeable by the web server user.
+$logsdirectory = "../etc";
+
+# If you configure this, nsedit will try to authenticate via WeFact too.
+# Debtors will be added to the sqlitedatabase with their crypted password.
+#$wefactapiurl = 'https://yourdomain/Pro/apiv2/api.php';
+#$wefactapikey = 'xyz';
+
+# If you want external scripts to be able to execute stuff here, add the
+# remote-ip to $adminapiips and create a $adminapikey
+#$adminapiips = array();
+#$adminapikey = 'thisshouldbequitealongstring,youknow';
+
+$authdb  = "/app/data/pdns.users.sqlite3";
+
+# Set a random generated secret to enable auto-login and long living csrf tokens
+// $secret = '...';
+
+$templates = array();
+/*
+$templates[] = array(
+    'name' => 'Tuxis',
+    'owner' => 'username', # Set to 'public' to make it available to all users
+    'records' => array(
+    array(
+        'name'      => '',
+        'type'      => 'MX',
+        'content'   => '200 mx2.tuxis.nl'),
+    array(
+        'name'      => '',
+        'type'      => 'A',
+        'content'   => '1.2.3.4'),
+    array(
+        'name'      => 'www',
+        'type'      => 'CNAME',
+        'content'   => '[zonename]')
+    )
+);
+*/
+
+$defaults['soa_edit']    = 'INCEPTION-INCREMENT';
+$defaults['soa_edit_api'] = 'INCEPTION-INCREMENT';
+$defaults['defaulttype'] = 'Master';                    # Choose between 'Native' or 'Master'
+$defaults['ns'][0] = 'unconfigured.primaryns.';         # The value of the first NS-record
+$defaults['ns'][1] = 'unconfigured.secondaryns.';       # The value of the second NS-record
+$defaults['ttl']   = 3600;                              # Default TTL for records
+$defaults['disabled'] = false;                          # Default disabled state
+
+## UI Options
+$menutype = 'horizontal'; # horizontal|vertical - use a horizontal or vertical menu
+$logo = 'img/nsedit.png';

@@ -17,6 +17,7 @@ File Descriptions:
 2. **`pdns.conf`**: Configuration file for PowerDNS server
 3. **`pdns_schema.sql`**: SQL schema for PowerDNS required at installation
 4. **`nsedit.config.inc.php`**: Configuration file for NSedit web frontend
+5. **`example_config`**: Example configuration files from a single host setup (All service on one host)
 
 These services can be installed on a single host but it is recommended to install them on separate hosts
 
