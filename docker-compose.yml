@@ -1,0 +1,46 @@
+version: "3.3"
+services:
+  mariadb:
+    restart: always
+    image: 10.27.252.185/mariadb:10.2
+    ports:
+      - "127.0.0.1:3306:3306"     #Local
+    environment:
+      - MYSQL_ROOT_PASSWORD=<TODO:mysql_root_password_here>
+      - MYSQL_DATABASE=pdns
+      - MYSQL_USER=pdns
+      - MYSQL_PASSWORD=<TODO:pdns_user_password_here>
+    volumes:
+      - type: volume              #MySQL Database
+        source: mariadb-data
+        target: /var/lib/mysql
+  pdns-server:
+    restart: always
+    image: 10.27.252.185/powerdns:psitrax-4.1.0
+    ports:
+      - "53:53"                   #Public
+      - "53:53/udp"               #Public
+      - "127.0.0.1:8081:8081"     #Local
+    environment:
+      - MYSQL_AUTOCONF=false      #Because we are overriding the conf file
+    volumes:
+      - type: bind
+        source: ./pdns.conf
+        target: /etc/pdns/pdns.conf
+  nsedit:
+    restart: always
+    image: 10.27.252.185/nsedit-debian:jessie-1.1
+    ports:
+      - "80:8080"                 #Public
+    volumes:
+      - type: bind
+        source: ./nsedit.config.inc.php
+        target: /app/nsedit/includes/config.inc.php
+      - type: volume                #NSEdit Sqlite Database
+        source: nsedit-data
+        target: /app/data
+volumes:
+  mariadb-data:
+    external: true
+  nsedit-data:
+    external: true
