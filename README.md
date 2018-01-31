@@ -71,3 +71,17 @@ Steps to Setup PowerDNS with MariaDB backend and NSedit as frontend:
         > docker volume create --name=nsedit-data
     * Start service: 
         > docker-compose up -d nsedit
+
+Check **Logs** for respective services:
+ * Use command: `docker-compose logs -f <service_name>` e.g.
+    > docker-compose logs -f pdns-server
+    
+Other docker-compose **commands**:
+*  Check status of services:
+    > docker-compose ps
+* Stop service(s)
+    > docker-compose stop [service_name]
+* Remove container(s)
+    > docker-compose rm [service_name]
+* Logs for a service     
+    > docker-compose logs [-f] service_name
