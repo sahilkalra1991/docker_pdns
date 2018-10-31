@@ -2,7 +2,7 @@ version: "3.3"
 services:
   mariadb:
     restart: always
-    image: 10.27.252.185/mariadb:10.2
+    image: mariadb:10.2
 #    networks:
 #      - pdns-net
     ports:
@@ -18,7 +18,7 @@ services:
         target: /var/lib/mysql
   pdns-server:
     restart: always
-    image: 10.27.252.185/powerdns:psitrax-4.1.0
+    image: powerdns/psitrax:4.1.4
 #    networks:
 #      - pdns-net
     ports:
@@ -31,22 +31,8 @@ services:
       - type: bind
         source: ./pdns.conf
         target: /etc/pdns/pdns.conf
-  nsedit:
-    restart: always
-    image: 10.27.252.185/nsedit-debian:jessie-1.1
-    ports:
-      - "80:8080"                 #Public
-    volumes:
-      - type: bind
-        source: ./config.inc.php
-        target: /app/nsedit/includes/config.inc.php
-      - type: volume                #NSEdit Sqlite Database
-        source: nsedit-data
-        target: /app/data
 volumes:
   mariadb-data:
-    external: true
-  nsedit-data:
     external: true
 #networks:
 #  pdns-net:
