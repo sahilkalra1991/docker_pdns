@@ -8,15 +8,13 @@ Requirements:
 * Sudo access
 
 This setup installs following services:
-1. **PowerDNS** authoritative server: Version 4.1.0
+1. **PowerDNS** authoritative server: Version 4.1.4
 2. **MariaDB** backend for PowerDNS: Version 10.2
-3. **NSedit** Web frontend for PowerDNS: Version Latest **[Development. Not ready for Production]**
 
 File Descriptions:
 1. **`docker-compose.yml`**: Contains service definitions of all docker containers
 2. **`pdns.conf`**: Configuration file for PowerDNS server
 3. **`pdns_schema.sql`**: SQL schema for PowerDNS required at installation
-4. **`nsedit.config.inc.php`**: Configuration file for NSedit web frontend
 5. **`example_config`**: Example configuration files from a single host setup (All service on one host)
 
 These services can be installed on a single host but it is recommended to install them on separate hosts
@@ -31,14 +29,6 @@ Steps to Setup PowerDNS with MariaDB backend and NSedit as frontend:
     > sudo chmod +x /usr/local/bin/docker-compose
     
     > docker-compose --version
-3. Add Docker private insecure registry: https://docs.docker.com/registry/insecure/
-    * Add following lines to `/etc/docker/daemon.json`
-        
-        {
-          "insecure-registries" : ["10.27.252.185"]
-        }
-    * Restart Docker service: 
-        > sudo service docker restart
 3. Clone the repository:
     > git clone https://github.com/sahilkalra1991/docker_pdns.git
    
@@ -63,15 +53,6 @@ Steps to Setup PowerDNS with MariaDB backend and NSedit as frontend:
         > mysql -h <host_ip> -u pdns -p pdns < pdns_schema.sql
     * Start service: 
         > docker-compose up -d pdns-server
-6. Configure and Install **NSedit** web frontend: https://github.com/tuxis-ie/nsedit/blob/master/Dockerfile
-    * Configure via Configuration file **`config.inc.php`**:
-        * `config.inc.php` will be overwritten to `/app/nsedit/includes/config.inc.php` inside the container.
-        * **Required:** Provide All settings marked with `<TODO>` i.e. search for TODO in `config.inc.php` and provide required values e.g. apipass, apiip
-        * Optional: Other settings in the file. Change as per requirement
-    * Create data volume: 
-        > docker volume create --name=nsedit-data
-    * Start service: 
-        > docker-compose up -d nsedit
 
 Check **Logs** for respective services:
  * Use command: `docker-compose logs -f <service_name>` e.g.
